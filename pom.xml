@@ -63,7 +63,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<fork>true</fork>
-					<mainClass>com.alerouge.ourlinguo.controller.ProvaApp</mainClass>
+					<mainClass>com.alerouge.ourlinguo.controller.Application</mainClass>
 				</configuration>
 				<executions>
 					<execution>
