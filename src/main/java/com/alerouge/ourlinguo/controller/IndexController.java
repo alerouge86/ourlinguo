@@ -84,6 +84,8 @@ public class IndexController {
 			}
 		}
 		
+		model.addAttribute("callDa", callDa);
+		
 		if (!inizia){
 			model.addAttribute("richiediNumeroParole", "Y");
 		    model.addAttribute("numeroDomande", "0");

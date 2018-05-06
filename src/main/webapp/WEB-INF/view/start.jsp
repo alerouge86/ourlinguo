@@ -354,11 +354,12 @@ $("input[name='rdbAnswer']").change(function() {
 $("#btnConfirmNumberQuestion").click(function() {
 	var flgAllQuestion = $('#chkAllQuestion').is(":checked");
 	if (flgAllQuestion || ($("#txtNumeroQuestions").val()!="" && $("#txtNumeroQuestions").val()!="0")){
+		var callDa = "${callDa}";
 		var numQuestion = $("#txtNumeroQuestions").val();
 		if (flgAllQuestion){
 			numQuestion = 999;	// in case checkbox "all questions" selected
 		}
-	    location.href = "/startOriginal?callDa=Russo&numeroParole="+numQuestion;
+	    location.href = "/startOriginal?callDa="+callDa+"&numeroParole="+numQuestion;
 	} else {
 		$("#divObblAnswerNumeroQuestions").show();
 	}

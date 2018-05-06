@@ -50,7 +50,7 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<h2>Изучать Итальянский</h2>
-				<p><a href="/startOriginal?callDa=Italiano" class="btn btn-success btn-lg">Начать</a></p>
+				<p><a href="/startOriginal?callDa=Italiano&numeroParole=0" class="btn btn-success btn-lg">Начать</a></p>
 			</div>
 			<div class="col-sm-6">
 				<h4>загрузить файл&nbsp;<span class="label label-success">excel</span></h4>
