@@ -77,4 +77,9 @@ public class QuestionsController {
 		}
 	}
 
+	@RequestMapping("/prova")
+	public String prova(){
+		return "prova";
+	}
+
 }
