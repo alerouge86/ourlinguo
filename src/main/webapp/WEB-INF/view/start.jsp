@@ -79,7 +79,7 @@ span {
 			        <p id="pRisultato"></p>
 			    </div>
 			</div>
-			<div class="col-sm-3">Look at the result <a href="<c:url value='/viewResult' />">here</a></div>
+			<div class="col-sm-3"><p id="pViewResult" style="display: none;">Look at the result <a href="<c:url value='/viewResult' />">here</a></p></div>
 		</div>
 
 		<div class="jumbotron">
@@ -312,6 +312,7 @@ $("#btnFinish").click(function() {
 	$("#divNotaSelez").hide();
 	$("#pRisultato").html("<span class=\"glyphicon glyphicon-ok\"></span>&nbsp;&nbsp;<strong>Finished!</strong>&nbsp;" + complimenti + ", you answered " + risposteGiuste + " questions out of " + risposteTotali);
 	$("#divRisultato").show();
+	$("#pViewResult").show();
 	
 	$("#btnFinish").hide();
     $("#btnRestart").show();
