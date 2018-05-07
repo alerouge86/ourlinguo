@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alerouge.ourlinguo.business.StampaRisultatoExcel;
 import com.alerouge.ourlinguo.business.Words;
 import com.alerouge.ourlinguo.model.Question;
+import com.alerouge.ourlinguo.model.RisultatoRisposta;
 
 @RestController
 public class QuestionsController {
@@ -70,11 +72,15 @@ public class QuestionsController {
 	
 	@RequestMapping("/verifyAnswer")
 	public String verifyAnswer(@RequestParam(value = "question") String question, @RequestParam(value = "answer") String answer){
-		if (answer.equals(Words.abbinamentiParoleBackUp.get(question))){
-			return "OK";
+		String result = null;
+		String correctAnswer = Words.abbinamentiParoleBackUp.get(question);
+		if (answer.equals(correctAnswer)){
+			result = "OK";
 		} else {
-			return "KO";
+			result = "KO";
 		}
+		Words.elencoRisultatoRisposta.add(new RisultatoRisposta(question, correctAnswer, result, answer));
+		return result;
 	}
 
 	@RequestMapping("/prova")

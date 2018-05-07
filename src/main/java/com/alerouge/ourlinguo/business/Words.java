@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,13 +19,15 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.alerouge.ourlinguo.model.RisultatoRisposta;
+
 public class Words {
 
 	public static Map<String, String> abbinamentiParole;
 	public static Map<String, String> abbinamentiParoleBackUp;	// non vengono cancellati
-	// gli elementi da qui. Viene usata per il controllo delle risposte
-	
+																// gli elementi da qui. Viene usata per il controllo delle risposte
 	public static List<String> elencoRisposte;
+	public static List<RisultatoRisposta> elencoRisultatoRisposta;	// tiene traccia delle risposte per poi stampare l'excel "risultato" alla fine
 	
 	public static final String FILE_ORIGINAL_LOCATION = "uploads/original.xlsx";
 	
@@ -54,9 +57,9 @@ public class Words {
                     //getCellTypeEnum ill be renamed to getCellType starting from version 4.0
                     if (currentCell.getCellTypeEnum() == CellType.STRING) {
                         if (col++==0){
-                        	question = capitalizeWords(currentCell.getStringCellValue()).trim();
+                        	question = upperCaseFirstLetter(currentCell.getStringCellValue()).trim();
                         } else {
-                        	answer = capitalizeWords(currentCell.getStringCellValue()).trim();
+                        	answer = upperCaseFirstLetter(currentCell.getStringCellValue()).trim();
                         }
                     }
 
@@ -81,6 +84,8 @@ public class Words {
 		abbinamentiParoleBackUp = new HashMap<String,String>(abbinamentiParole);
 
 		initEleRisposte();
+		
+		elencoRisultatoRisposta = new LinkedList<>();
 	}
 	
 	
@@ -100,13 +105,12 @@ public class Words {
 	}
 	
 	
-	private static String capitalizeWords(String strInput){
-		StringBuilder result = new StringBuilder(strInput.length());
-		String words[] = strInput.split("\\ "); 
-		for (int i = 0; i < words.length; i++){			
-			result.append(Character.toUpperCase(words[i].charAt(0))).append(words[i].substring(1)).append(" ");
+	private static String upperCaseFirstLetter(String strInput){
+		try{
+			return strInput.substring(0,1).toUpperCase() + strInput.substring(1);
+		} catch (Exception e) {
+			return strInput;
 		}
-		return result.toString();
 	}
 	
 	
