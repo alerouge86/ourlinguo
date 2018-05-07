@@ -12,6 +12,7 @@ import java.nio.charset.Charset;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.Utilities;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alerouge.ourlinguo.business.StampaRisultatoExcel;
 import com.alerouge.ourlinguo.business.Words;
+import com.alerouge.ourlinguo.utilities.Utility;
 
 @Controller
 public class IndexController {
@@ -77,9 +80,9 @@ public class IndexController {
 			if (numeroParoleInt>0){
 				// carico la mappa delle parole
 			    File currDir = new File(".");
-			    String nomeFileConPath = currDir.getAbsolutePath().substring(0, currDir.getAbsolutePath().length() - 1) + Words.FILE_ORIGINAL_LOCATION;
+			    String nomeFileCompleto = currDir.getAbsolutePath().substring(0, currDir.getAbsolutePath().length() - 1) + Words.FILE_ORIGINAL_LOCATION;
 
-			    Words.init(nomeFileConPath, numeroParoleInt, callDa);
+			    Words.init(nomeFileCompleto, numeroParoleInt, callDa);
 			    inizia = true;
 			}
 		}
@@ -110,46 +113,21 @@ public class IndexController {
 	@RequestMapping(value="/download", method = RequestMethod.GET)
     public void downloadFile(HttpServletResponse response) throws IOException {
      
-        File file = null;
-         
 	    File currDir = new File(".");
-	    String nomeFileConPath = currDir.getAbsolutePath().substring(0, currDir.getAbsolutePath().length() - 1) + Words.FILE_ORIGINAL_LOCATION;
-        file = new File(nomeFileConPath);
+	    String nomeFileCompleto = currDir.getAbsolutePath().substring(0, currDir.getAbsolutePath().length() - 1) + Words.FILE_ORIGINAL_LOCATION;
          
-        if(!file.exists()){
-            String errorMessage = "Sorry. The file you are looking for does not exist";
-            System.out.println(errorMessage);
-            OutputStream outputStream = response.getOutputStream();
-            outputStream.write(errorMessage.getBytes(Charset.forName("UTF-8")));
-            outputStream.close();
-            return;
-        }
-         
-        String mimeType= URLConnection.guessContentTypeFromName(file.getName());
-        if(mimeType==null){
-            System.out.println("mimetype is not detectable, will take default");
-            mimeType = "application/octet-stream";
-        }
-         
-        System.out.println("mimetype : "+mimeType);
-         
-        response.setContentType(mimeType);
-         
-        /* "Content-Disposition : inline" will show viewable types [like images/text/pdf/anything viewable by browser] right on browser 
-            while others(zip e.g) will be directly downloaded [may provide save as popup, based on your browser setting.]*/
-        response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() +"\""));
- 
-         
-        /* "Content-Disposition : attachment" will be directly download, may provide save as popup, based on your browser setting*/
-        //response.setHeader("Content-Disposition", String.format("attachment; filename=\"%s\"", file.getName()));
-         
-        response.setContentLength((int)file.length());
- 
-        InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
- 
-        //Copy bytes from source to destination(outputstream in this example), closes both streams.
-        FileCopyUtils.copy(inputStream, response.getOutputStream());
+		Utility.downloadFile(nomeFileCompleto, false, response);
     }
 
+
+	@RequestMapping(value="/viewResult", method = RequestMethod.GET)
+    public void viewResult(HttpServletResponse response) throws IOException {
+     
+		// esegue la stampa
+		StampaRisultatoExcel stampaRisultatoExcel = new StampaRisultatoExcel(Words.elencoRisultatoRisposta);
+		String nomeFileCompleto = stampaRisultatoExcel.creaStampa();
+
+		Utility.downloadFile(nomeFileCompleto, true, response);
+    }
 	
 }

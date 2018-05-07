@@ -79,7 +79,7 @@ span {
 			        <p id="pRisultato"></p>
 			    </div>
 			</div>
-			<div class="col-sm-3"></div>
+			<div class="col-sm-3">Look at the result <a href="<c:url value='/viewResult' />">here</a></div>
 		</div>
 
 		<div class="jumbotron">
@@ -365,7 +365,6 @@ $("#btnConfirmNumberQuestion").click(function() {
 	}
 
 });
-
 
 </script>    
 
