@@ -169,7 +169,6 @@ span {
 			<button id="btnExit" class="btn btn-danger btn-lg">Exit</button>
 		</div>
 	</div>
-</div>
 
 </body>
 

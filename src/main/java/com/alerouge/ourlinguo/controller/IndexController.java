@@ -1,23 +1,19 @@
 package com.alerouge.ourlinguo.controller;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URLConnection;
-import java.nio.charset.Charset;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.Utilities;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,8 +35,8 @@ public class IndexController {
 	
 	private String fileLocation;
 	 
-	@PostMapping("/uploadExcelFile")
-	public String uploadFile(@RequestParam(value = "callDa") String callDa, Model model, MultipartFile file) throws IOException {
+	@PostMapping("/uploadExcelFileTemp")
+	public String uploadFileTemp(@RequestParam(value = "callDa") String callDa, Model model, MultipartFile file) throws IOException {
 		
 		// pulisco la cartella "temp"
 	    File currDir = new File(".");
@@ -66,6 +62,56 @@ public class IndexController {
 		    return "index";
 		}
 	}
+	
+	
+	@PostMapping("/uploadExcelFileOriginal")
+	public String uploadFileOriginal(Model model, MultipartFile file) throws IOException {
+	    File currDir = new File(".");
+	    String nomeFileCompleto = currDir.getAbsolutePath().substring(0, currDir.getAbsolutePath().length() - 1) + Words.FILE_ORIGINAL_LOCATION;
+
+	    String pathTemp = currDir.getAbsolutePath().substring(0, currDir.getAbsolutePath().length() - 1) + "uploads/";
+		
+	    InputStream in = file.getInputStream();
+	    fileLocation = pathTemp + file.getOriginalFilename();
+	    try {
+		    FileOutputStream f = new FileOutputStream(nomeFileCompleto);
+		    int ch = 0;
+		    while ((ch = in.read()) != -1) {
+		        f.write(ch);
+		    }
+		    f.flush();
+		    f.close();
+		    
+		    model.addAttribute("fileOriginalCaricato", "Y");
+		} catch (Exception e) {
+		    model.addAttribute("fileOriginalCaricato", "N");
+		}
+	    return "index";
+	}
+	
+
+	@RequestMapping("/restoreFileExcel")
+	public String restoreFileExcel(Model model){
+
+		try {
+		    File currDir = new File(".");
+		    String nomeFileCompletoSorg = currDir.getAbsolutePath().substring(0, currDir.getAbsolutePath().length() - 1) + Words.FILE_CAMPIONE_LOCATION;
+		    String nomeFileCompletoDest = currDir.getAbsolutePath().substring(0, currDir.getAbsolutePath().length() - 1) + Words.FILE_ORIGINAL_LOCATION;
+			
+		    File fileSorg = new File(nomeFileCompletoSorg);
+		    File fileDest = new File(nomeFileCompletoDest);
+		    
+		    
+		    Files.copy(fileSorg.toPath(), fileDest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+		    model.addAttribute("fileCampioneCaricato", "Y");
+		    
+		} catch (Exception e) {
+		    model.addAttribute("fileCampioneCaricato", "N");
+		}
+	    return "index";
+	}
+
 
 	@RequestMapping("/startOriginal")
 	public String startOriginal(@RequestParam(value = "callDa") String callDa, @RequestParam(value = "numeroParole") String numeroParole, Model model){

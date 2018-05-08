@@ -29,6 +29,7 @@ public class Words {
 	public static List<String> elencoRisposte;
 	public static List<RisultatoRisposta> elencoRisultatoRisposta;	// tiene traccia delle risposte per poi stampare l'excel "risultato" alla fine
 	
+	public static final String FILE_CAMPIONE_LOCATION = "uploads/originalFile.xlsx";
 	public static final String FILE_ORIGINAL_LOCATION = "uploads/original.xlsx";
 	
 	
