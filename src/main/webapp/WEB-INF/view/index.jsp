@@ -23,7 +23,7 @@
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
 				<span class="sr-only">Toggle navigation</span>
 			</button>
-			<a class="navbar-brand" href="#">Ourlinguo)))!</a>
+			<a class="navbar-brand" href="#">Ourlinguo)))</a>
 		</div>
 	</div>
 </nav>
