@@ -57,7 +57,7 @@ span {
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
 				<span class="sr-only">Toggle navigation</span>
 			</button>
-			<a id="anchorHome" class="navbar-brand" href="#">Ourlinguo)))</a>
+			<a id="anchorHome" class="navbar-brand" href="http://localhost:8080">Ourlinguo)))</a>
 		</div>
 	</div>
 </nav>

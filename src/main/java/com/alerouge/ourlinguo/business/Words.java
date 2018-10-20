@@ -29,14 +29,25 @@ public class Words {
 	public static List<String> elencoRisposte;
 	public static List<RisultatoRisposta> elencoRisultatoRisposta;	// tiene traccia delle risposte per poi stampare l'excel "risultato" alla fine
 	
+	public static List<String> elencoParoleItaliano;
+	public static List<String> elencoParoleRusso;
+	
 	public static final String FILE_CAMPIONE_LOCATION = "uploads/originalFile.xlsx";
 	public static final String FILE_ORIGINAL_LOCATION = "uploads/original.xlsx";
 	
 	
 	public static void init(String nomeFile, int numeroParole, String callDa){
 
+		if (elencoParoleItaliano!=null){
+			// vuol dire che il metodo init è gia stato chiamato
+			return;
+		}
+		
 		Map<String, String> mappaCompleta = new HashMap<>();
 
+		elencoParoleRusso = new ArrayList<String>();
+		elencoParoleItaliano = new ArrayList<String>();
+		
 		try {
             FileInputStream excelFile = new FileInputStream(new File(nomeFile));
             Workbook workbook = new XSSFWorkbook(excelFile);
@@ -71,6 +82,9 @@ public class Words {
                 	mappaCompleta.put(answer, question);
                 }
 
+                elencoParoleRusso.add(question);
+                elencoParoleItaliano.add(answer);
+                
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -127,4 +141,14 @@ public class Words {
 		abbinamentiParole = new HashMap<String,String>(abbinamentiParoleBackUp);
 		initEleRisposte();
 	}
+	
+	public static List<String> getElencoParoleItaliano() {
+		return elencoParoleItaliano;
+	}
+
+
+	public static List<String> getElencoParoleRusso() {
+		return elencoParoleRusso;
+	}
+
 }

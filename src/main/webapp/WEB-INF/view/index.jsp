@@ -25,8 +25,8 @@
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
 				<span class="sr-only">Toggle navigation</span>
 			</button>
-			<a class="navbar-brand" href="#">Ourlinguo)))</a>
-			<a class="navbar-brand" href="/startHelper?callDa=Italiano">Helper</a>
+			<a class="navbar-brand" href="http://localhost:8080">Ourlinguo)))</a>
+			<a class="navbar-brand" href="/showHelper">Helper</a>
 		</div>
 	</div>
 </nav>
